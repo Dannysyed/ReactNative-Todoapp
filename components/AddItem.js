@@ -14,7 +14,7 @@ const AddItem = (prop) => {
 
                 <View style={styles.inputcontainer}>
 
-                    <TextInput placeholder='Your course goal!' onChangeText={goalInputHandler} style={styles.textInput} />
+                    <TextInput placeholder='Your course goal' onChangeText={goalInputHandler} style={styles.textInput} />
                 </View>
                 <View style={styles.buttoncontainer}>
                     <View style={styles.button1}>
