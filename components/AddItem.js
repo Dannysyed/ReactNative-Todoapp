@@ -5,6 +5,7 @@ const AddItem = (prop) => {
     let goalInputHandler = (enteredText) => {
         setgoal(enteredText)
 
+
     }
     return (
         <Modal visible={prop.showmodal} animationType='slide'>
@@ -18,7 +19,7 @@ const AddItem = (prop) => {
                 <View style={styles.buttoncontainer}>
                     <View style={styles.button1}>
 
-                        <Button disabled={false} title='Add Goal' onPress={prop.addgoal.bind(null, goal)} />
+                        <Button disabled={false} title='Add Goal!' onPress={prop.addgoal.bind(null, goal)} />
                     </View>
                     <View style={styles.button2}>
 
