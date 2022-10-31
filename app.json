@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "my-app",
+    "name": "Todo-app",
     "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/goal.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#311b6b"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -21,13 +21,20 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.dannysyed20.myapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0ed19c5e-1276-4468-bacf-fdd9ddfead12"
+      }
     }
   }
 }
