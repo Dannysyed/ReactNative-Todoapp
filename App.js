@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
 import AddItem from './components/AddItem';
 import ItemList from './components/ItemList';
@@ -11,6 +11,7 @@ export default function App() {
   let [disabled, setDisable] = useState(false)
   let [show, setShow] = useState(false)
   let [token, setToken] = useState('')
+  let [Notes, setNotes] = useState([])
   useEffect(() => {
     if (goal !== '') {
       setDisable(false)
@@ -28,7 +29,7 @@ export default function App() {
 
   let addGoalHandler = (data) => {
     console.log(goal, 'asd')
-    setAllGoal([...allGoal, data])
+
     setShow(false)
     axios.defaults.headers = {
       'Content-Type': 'application/json',
@@ -41,13 +42,16 @@ export default function App() {
         'Authorization': `Bearer ${token}`
       }
 
+    }).then(res => {
+      setgoal([...allGoal, data])
     })
-
   }
   let deleteButton = (val, i) => {
-    console.log(i)
-    setAllGoal(allGoal.filter((_, val) => val !== i))
-    console.log(allGoal)
+
+    axios.post(`https://fastapi-mongo-test.onrender.com/delete_note/${i}`).then(res => {
+
+    })
+
   }
   console.log(allGoal)
   let dummy = ['Learn React Native', 'Learn React Native', 'Learn React Native']
@@ -65,16 +69,28 @@ export default function App() {
 
     )
   }, [])
+  let getdata = () => {
+    axios.get("https://fastapi-mongo-test.onrender.com/all_notes").then(res => {
+      setNotes(res.data.data)
+    })
+    console.log(
+      'asdf'
+    )
+  }
+  useEffect(() => {
+    getdata()
+  }, [goal])
   let closeModal = () => {
     setShow(false)
   }
+  console.log(Notes, 'asdfasdfasd')
   return (
     <View style={styles.appContainer} >
       <AddItem addgoal={addGoalHandler} showmodal={show} modalfn={closeModal} token={token} />
       {!show && <View style={styles.box2}>
         <Button title='Add New Goal' onPress={ModalHandle} />
         <ScrollView >
-          {allGoal.map((val, i) => <ItemList text={val} id={i} delete={deleteButton} />)}
+          {Notes?.map((val, i) => <ItemList text={val.todo} id={val.id} delete={deleteButton} />)}
         </ScrollView>
       </View>}
 
