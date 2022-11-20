@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios';
 import { Button, StyleSheet, Text, View, TextInput, ScrollView, Modal, Image } from 'react-native';
 const AddItem = (prop) => {
     let [goal, setgoal] = useState('')

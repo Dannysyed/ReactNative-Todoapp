@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
 import AddItem from './components/AddItem';
 import ItemList from './components/ItemList';
+import axios from 'axios';
 
 export default function App() {
   let [goal, setgoal] = useState('')
   let [allGoal, setAllGoal] = useState([])
   let [disabled, setDisable] = useState(false)
   let [show, setShow] = useState(false)
+  let [token, setToken] = useState('')
   useEffect(() => {
     if (goal !== '') {
       setDisable(false)
@@ -28,6 +30,19 @@ export default function App() {
     console.log(goal, 'asd')
     setAllGoal([...allGoal, data])
     setShow(false)
+    axios.defaults.headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+    axios.post(`https://fastapi-mongo-test.onrender.com/add_note?name=Daniyal&todo=${data}`, {
+      headers: {
+        // Overwrite Axios's automatically set Content-Type
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+
+    })
+
   }
   let deleteButton = (val, i) => {
     console.log(i)
@@ -37,14 +52,25 @@ export default function App() {
   console.log(allGoal)
   let dummy = ['Learn React Native', 'Learn React Native', 'Learn React Native']
   let ModalHandle = () => {
+    console.log('hello')
     setShow(true)
   }
+  useEffect(() => {
+    axios.get("https://fastapi-mongo-test.onrender.com/login").then(res => {
+      let datSa = JSON.parse(res.data.token).access_token
+      console.log(datSa)
+      setToken(datSa)
+
+    }
+
+    )
+  }, [])
   let closeModal = () => {
     setShow(false)
   }
   return (
     <View style={styles.appContainer} >
-      <AddItem addgoal={addGoalHandler} showmodal={show} modalfn={closeModal} />
+      <AddItem addgoal={addGoalHandler} showmodal={show} modalfn={closeModal} token={token} />
       {!show && <View style={styles.box2}>
         <Button title='Add New Goal' onPress={ModalHandle} />
         <ScrollView >
