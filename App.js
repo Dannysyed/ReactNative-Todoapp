@@ -43,13 +43,13 @@ export default function App() {
       }
 
     }).then(res => {
-      setgoal([...allGoal, data])
+      setNotes(res.data.newdata)
     })
   }
   let deleteButton = (val, i) => {
 
     axios.post(`https://fastapi-mongo-test.onrender.com/delete_note/${i}`).then(res => {
-
+      setNotes(res.data.newdata)
     })
 
   }
@@ -73,13 +73,10 @@ export default function App() {
     axios.get("https://fastapi-mongo-test.onrender.com/all_notes").then(res => {
       setNotes(res.data.data)
     })
-    console.log(
-      'asdf'
-    )
   }
   useEffect(() => {
     getdata()
-  }, [goal])
+  }, [])
   let closeModal = () => {
     setShow(false)
   }
